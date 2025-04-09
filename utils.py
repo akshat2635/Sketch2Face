@@ -5,25 +5,6 @@ import numpy as np
 import torchvision.transforms as transforms
 
 
-from transformers import BlipProcessor, BlipForConditionalGeneration
-from PIL import Image
-import torch
-
-# Setup device
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-# Load BLIP model and processor
-blip_processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
-blip_model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base").to(device)
-
-def get_image_caption(image: Image.Image) -> str:
-    image = image.convert("RGB")
-    inputs = blip_processor(images=image, return_tensors="pt").to(device)
-    output = blip_model.generate(**inputs)
-    caption = blip_processor.decode(output[0], skip_special_tokens=True)
-    return caption
-
-
 def generate_image_from_sketch(sketch_img: Image.Image, generator_model: torch.nn.Module, device='cpu') -> Image.Image:
     # Resize and convert to RGB to ensure 3 channels
     sketch_img = sketch_img.resize((256, 256)).convert("RGB")
