@@ -1,10 +1,13 @@
 import sys
-try:
-    import pysqlite3
-    sys.modules["sqlite3"] = pysqlite3
-except ImportError:
-    raise ImportError("pysqlite3-binary is not installed. Please add it to requirements.txt.")
+import platform
 
+# Only patch if not running on Windows (e.g., Streamlit Cloud uses Linux)
+if platform.system() != "Windows":
+    try:
+        import pysqlite3
+        sys.modules["sqlite3"] = pysqlite3
+    except ImportError:
+        raise ImportError("pysqlite3-binary is not installed. Add it to requirements.txt for deployment.")
 
 import torch
 import os
@@ -67,9 +70,9 @@ def train_rag_on_images(image_folder):
         for file in files:
             if file.lower().endswith((".jpg", ".png", ".jpeg")):
                 image_paths.append(os.path.join(root, file))
-
+    image_paths=image_paths[:4000]  # Limit to 4000 images for faster training
     print(f"Embedding {len(image_paths)} images...")
-
+    
     for idx, path in enumerate(tqdm(image_paths)):
         embedding = clip_embedder.embed_image(path)
         collection.add(
