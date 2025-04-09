@@ -1,3 +1,11 @@
+import sys
+try:
+    import pysqlite3
+    sys.modules["sqlite3"] = pysqlite3
+except ImportError:
+    raise ImportError("pysqlite3-binary is not installed. Please add it to requirements.txt.")
+
+
 import torch
 import os
 from transformers import CLIPProcessor, CLIPModel
