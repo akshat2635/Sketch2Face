@@ -1,4 +1,4 @@
 # Ignore all .pth files (PyTorch model files)
 *.pth
 /venv
-/Web_Demo/flickr8k
+/flickr8k
