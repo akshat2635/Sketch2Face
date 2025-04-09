@@ -14,6 +14,7 @@ import chromadb
 from chromadb.utils.embedding_functions import EmbeddingFunction
 from tqdm import tqdm
 import subprocess
+from download import download_flickr8k_dataset
 
 class CLIPEmbeddingFunction(EmbeddingFunction):
     def __init__(self):
@@ -55,7 +56,7 @@ def train_rag_on_images(image_folder):
     # Check if image folder exists; if not, run downloader
     if not os.path.exists(image_folder):
         print(f"{image_folder} not found. Downloading dataset...")
-        subprocess.run(["python", "download.py"], check=True)
+        download_flickr8k_dataset()
     
     """Embeds and stores image features in ChromaDB."""
     client = chromadb.PersistentClient(path="./chroma_db")
@@ -98,7 +99,7 @@ def query_similar_images(prompt=None, image=None, k=5):
     # Check if any result path is missing
     if any(not os.path.exists(path) for path in image_paths):
         print("Some image files are missing. Re-downloading dataset...")
-        subprocess.run(["python", "download.py"], check=True)
+        download_flickr8k_dataset()
 
     return image_paths
 
