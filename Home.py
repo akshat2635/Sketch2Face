@@ -9,5 +9,4 @@ This application demonstrates image ↔ sketch translation using a **pix2pix** m
 Use the sidebar to select:
 - 🔄 Image to Sketch
 - 🎨 Sketch to Image
-- 🖼️ Image Search
 """)
