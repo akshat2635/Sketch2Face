@@ -5,8 +5,8 @@ st.title("Welcome to Sketch ↔ Image Translation")
 
 st.markdown("""
 This application demonstrates image ↔ sketch translation using a **pix2pix** model.
-
 Use the sidebar to select:
 - 🔄 Image to Sketch
 - 🎨 Sketch to Image
+- 🖼️ Image Search
 """)
